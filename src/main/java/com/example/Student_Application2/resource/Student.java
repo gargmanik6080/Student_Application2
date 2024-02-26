@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class Student {
 
     final public Map<String, StudentDataModel> idToStudent = new HashMap<>();
-    final public Map<String, StudentDataModel> universityToStudents = new HashMap<>();
+    final public Map<String, List<StudentDataModel>> universityToStudents = new HashMap<>();
 
     @PostMapping("/addStudent")
     public String addStudent(@RequestBody String name,
@@ -27,13 +27,13 @@ public class Student {
         return id;
     }
 
-    @GetMapping("/getStudentsByUniversity")
-    public List<String> getStudentsByUniversity(String university){
+    @GetMapping("/getStudentsByUniversity/{university}")
+    public List<StudentDataModel> getStudentsByUniversity(@PathVariable String university){
         return universityToStudents.getOrDefault(university, null);
     }
 
-    @GetMapping("/getStudentByID")
-    public String getStudentByID(){
+    @GetMapping("/getStudentByID/{id}")
+    public StudentDataModel getStudentByID(@PathVariable String id){
         return idToStudent.getOrDefault(id, null);
     }
 }
